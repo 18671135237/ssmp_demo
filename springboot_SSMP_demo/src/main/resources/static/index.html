@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BOOK</title>
+
+    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+
+</head>
+<body>
+
+    <div id="app">
+        <el-table :data="tableData" stripe>
+            <el-table-column prop="id" type="index"></el-table-column>
+            <el-table-column prop="bookName" label="名称" align="center"></el-table-column>
+            <el-table-column prop="price" label="价格" align="center"></el-table-column>
+            <el-table-column label="操作" align="center">
+                <!--
+                    slot-scope：作用域插槽，可以获取表格数据
+                    scope：代表表格数据，可以通过scope.row来获取表格当前行数据，scope不是固定写法
+                -->
+                <template slot-scope="scope">
+                    <el-button type="primary" size="mini" @click="handleUpdate(scope.row)">编辑</el-button>
+                    <el-button type="danger" size="mini"  @click="handleDelete(scope.row)">删除</el-button>
+                </template>
+            </el-table-column>
+        </el-table>
+    </div>
+
+    <script>
+        new Vue({
+            el:'#app',
+            data:{
+                tableData: []
+            },
+            // 页面加载事件
+            created(){
+                this.getAll();
+            },
+            methods:{
+                handleUpdate(row){
+                    location.reload();
+                },
+                handleDelete(row){
+                    // 删除弹窗提示
+                    this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        type: 'warning',
+                        center: true
+                    }).then(() => {
+                        var that = this;
+                        // 请求后台进行删除
+                        axios.delete("http://127.0.0.1:9000/books/" + row.id).then(
+                            function (response){
+                                that.$message({
+                                    type: 'success',
+                                    message: '删除成功!'
+                                })
+                                location.reload();
+                            }
+                        )
+                    }).catch(() => {
+                        this.$message({
+                            type: 'info',
+                            message: '已取消删除'
+                        });
+                    });
+                },
+                // 查询全部数据
+                getAll(){
+                    var that = this;
+                    axios.get("http://127.0.0.1:9000/books").then(
+                        function (response){
+                            that.tableData = response.data.data;
+                            console.log(response.data.data);
+                        }
+                    )
+                }
+            }
+        });
+    </script>
+
+
+
+
+
+</body>
+</html>

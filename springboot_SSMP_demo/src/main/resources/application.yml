@@ -1,0 +1,63 @@
+
+# 访问端口设置【默认8080】
+server:
+  port: 9000
+
+# 数据库基本连接配置
+#spring:
+#  datasource:
+#    driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:mysql://127.0.0.1:3306/springboot_demo?serverTimezone=UTC
+#    username: root
+#    password: chenning666
+#    整合数据源通用写法
+#    type: com.alibaba.druid.pool.DruidDataSource
+
+# 整合 Druid 数据源基本配置
+spring:
+  datasource:
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://127.0.0.1:3306/springboot_demo?serverTimezone=UTC
+      password: chenning666
+      username: root
+# Redis缓存配置
+#  cache:
+#    type: redis
+#    redis:
+#      # 设置生命周期，即数据有效时间
+#      time-to-live: 10s
+#      # 开启 key 前缀
+#      use-key-prefix: true
+#      # 设置 key 前缀
+#      key-prefix: ssmp_
+#      # 是否缓存空值
+#      cache-null-values: false
+#  redis:
+#    host: 127.0.0.1
+#    port: 6379
+
+
+# MyBatis-Plus设置
+mybatis-plus:
+  global-config:
+    db-config:
+      # 数据库表名前缀设置【实体类名与数据库表名自动映射】
+      table-prefix: tb_
+      id-type: auto
+  # 开启 MyBatis-Plus 运行日志【控制台输出】
+#  configuration:
+#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+# 日志记录到指定文件
+logging:
+  file:
+    name: server.log
+  logback:
+    rollingpolicy:
+      # 设置日志文件大小【超出则自动新建文件】
+      max-file-size: 10MB
+      # 超出的新文件名设置【日期。。。】
+      file-name-pattern: server.%d{yyyy-MM-dd}.%i.log
+
+
