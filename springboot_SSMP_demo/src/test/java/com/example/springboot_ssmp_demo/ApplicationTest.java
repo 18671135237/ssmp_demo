@@ -96,15 +96,5 @@ class ApplicationTest {
     }
 
 
-    @Test
-    void test() {
-        String url = "https://openapi.italent.cn/RecruitV6/api/v1/Applicant/GetResume?applicantId=4b482cac-b3c2-4c64-8203-9efca1fbcf6f";
-        String token = "X4eTEiMr-UHQtfzxOvdy6Z4B479EwHvZ9-X8_Arwn1J9GzlyOICWKEicXuP9KJOp9hvt3X3Z0";
-
-    }
-
-
-
-
 
 }
